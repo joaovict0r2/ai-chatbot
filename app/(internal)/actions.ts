@@ -1,5 +1,8 @@
 "use server"
 
+import { generateHashId } from '@/lib/utils/crypto';
+import { redirect } from 'next/navigation';
+
 type CompletionState = {
   message: string | null;
   data?: string;
@@ -34,11 +37,11 @@ export async function completion(
 
     const data = await response.json()
     const resultText = data.choices[0].text
+    console.log(resultText)
 
-    return {
-      message: 'Completion successful!',
-      data: resultText,
-    };
+    const hash = generateHashId()
+
+    redirect(`/chat/${hash}`)
 
   } catch (error: any) {
     return {
