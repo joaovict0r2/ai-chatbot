@@ -6,7 +6,7 @@ import { useActionState } from "react";
 import { completion } from "./actions";
 
 export default function Home() {
-  const [state, action] = useActionState(completion, { message: null, data: undefined })
+  const [, action] = useActionState(completion, { message: null, data: undefined })
 
   return (
     <div className="h-full py-5 px-5 flex flex-col items-center justify-center">

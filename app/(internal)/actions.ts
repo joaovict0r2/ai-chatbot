@@ -37,6 +37,7 @@ export async function completion(
 
     const data = await response.json()
     const resultText = data.choices[0].text
+    console.log(resultText)
 
     const hash = generateHashId()
 
