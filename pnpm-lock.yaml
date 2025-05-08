@@ -9,7 +9,7 @@ importers:
   .:
     dependencies:
       '@auth/prisma-adapter':
-        specifier: ^2.7.4
+        specifier: 2.7.4
         version: 2.7.4(@prisma/client@6.7.0(prisma@6.7.0(typescript@5.8.3))(typescript@5.8.3))
       '@prisma/client':
         specifier: 6.7.0
