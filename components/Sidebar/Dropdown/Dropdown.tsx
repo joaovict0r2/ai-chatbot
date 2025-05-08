@@ -8,13 +8,16 @@ import { ThemeSwitch } from "../../ThemeSwitch/ThemeSwitch";
 import { SidebarMenuButton } from "@/components/ui/sidebar";
 import { ChevronsUpDownIcon, User2 } from "lucide-react";
 import { signOutAction } from "@/app/(internal)/_actions/signOutAction";
+import { auth } from "@/lib/auth";
 
-export function Dropdown() {
+export async function Dropdown() {
+  const session = await auth()
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <SidebarMenuButton>
-          <User2 /> Username
+          <User2 /> {session?.user?.name}
           <ChevronsUpDownIcon className="ml-auto" />
         </SidebarMenuButton>
       </DropdownMenuTrigger>

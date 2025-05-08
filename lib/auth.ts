@@ -1,11 +1,17 @@
 import NextAuth from "next-auth"
 import Credentials from "next-auth/providers/credentials"
+import Google from "next-auth/providers/google"
+
 import { db } from "./db"
 import { compare } from "bcryptjs"
 import { loginSchema } from "@/schemas/loginSchema"
+import { PrismaAdapter } from '@auth/prisma-adapter'
 
-export const { auth, signIn, signOut } = NextAuth({
+export const { auth, signIn, signOut, handlers } = NextAuth({
+  adapter: PrismaAdapter(db),
+  session: { strategy: 'jwt' },
   providers: [
+    Google,
     Credentials({
       authorize: async (credentials) => {
         const { success, data } = loginSchema.safeParse(credentials)
@@ -18,7 +24,7 @@ export const { auth, signIn, signOut } = NextAuth({
 
         const user = await db.user.findUnique({ where: { email }})
 
-        if (!user) {
+        if (!user || !user.password) {
           return null
         }
 
@@ -35,5 +41,15 @@ export const { auth, signIn, signOut } = NextAuth({
         }
       }
     })
-  ]
+  ],
+  callbacks: {
+    session ({ session, token }) {
+      if (token.sub) {
+        session.user.id = token.sub
+      }
+
+      return session
+    }
+  },
+  pages: { error: '/login' }
 })

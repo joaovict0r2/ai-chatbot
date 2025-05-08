@@ -15,6 +15,7 @@ import { useActionState } from "react";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { logInAction } from "@/app/login/_actions/logInAction";
+import { googleLogInAction } from "@/app/login/_actions/googleLogInAction";
 
 export function LoginForm({ className, ...props }: React.ComponentProps<"div">) {
   const [, dispatchAction, isPending] = useActionState(
@@ -71,6 +72,7 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
                   className="w-full"
                   type="button"
                   disabled={isPending}
+                  onClick={googleLogInAction}
                 >
                   Login with Google
                 </Button>
