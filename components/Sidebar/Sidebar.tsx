@@ -1,5 +1,3 @@
-import { ChevronsUpDownIcon, User2 } from "lucide-react"
-
 import {
   Sidebar,
   SidebarContent,
@@ -12,8 +10,8 @@ import {
   SidebarMenuButton,
   SidebarMenuItem
 } from "@/components/ui/sidebar"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu"
-import { ThemeSwitch } from "../ThemeSwitch/ThemeSwitch"
+import { Dropdown } from "./Dropdown/Dropdown"
+
 
 const items = [
   {
@@ -32,14 +30,14 @@ const items = [
 
 export function AppSidebar() {
   return (
-    <Sidebar collapsible="icon"> 
+    <Sidebar collapsible="icon">
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg">
               <div className='grid flex-1 text-left text-xl leading-tight'>
                 <p className='truncate font-bold'>
-                  Chat GPT
+                  CorrigeAI
                 </p>
               </div>
             </SidebarMenuButton>
@@ -69,28 +67,7 @@ export function AppSidebar() {
       <SidebarFooter>
           <SidebarMenu>
             <SidebarMenuItem>
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <SidebarMenuButton>
-                    <User2 /> Username
-                    <ChevronsUpDownIcon className="ml-auto" />
-                  </SidebarMenuButton>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent
-                  side="right"
-                  className="w-[--radix-popper-anchor-width] mb-2 ml-2"
-                >
-                  <DropdownMenuItem>
-                    <span>Account</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <ThemeSwitch/>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <span>Sign out</span>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+              <Dropdown/>
             </SidebarMenuItem>
           </SidebarMenu>
         </SidebarFooter>
