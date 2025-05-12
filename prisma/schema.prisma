@@ -17,6 +17,7 @@ model User {
   image         String?
 
   accounts Account[]
+  chats    Chat[]
 
   @@map("users")
 }
@@ -41,4 +42,50 @@ model Account {
 
   @@id([provider, providerAccountId])
   @@map("accounts")
+}
+
+model Chat {
+  id     String @id @default(uuid()) @db.Uuid // ID único para cada chat (cuid() é uma boa alternativa a UUID aqui)
+  userId String @db.Uuid @map("user_id")// Chave estrangeira para o User.id
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade) // Relacionamento com o User
+
+  // Essencial para a API de Assistants da OpenAI
+  threadId String @unique @map("thread_id")// ID da Thread da OpenAI. Cada chat SEU corresponde a uma Thread na OpenAI.
+
+  title     String? // Título do chat (pode ser gerado ou definido pelo usuário)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  messages Message[] // Relacionamento com as mensagens do chat
+
+  @@index([userId])
+  @@index([threadId]) // Indexar para buscas rápidas de threads
+  @@map("chats")
+}
+
+model Message {
+  id     String @id @default(uuid()) @db.Uuid // ID único para cada mensagem
+  chatId String @db.Uuid @map("chat_id")// ID do chat ao qual a mensagem pertence (referencia Chat.id)
+  chat   Chat   @relation(fields: [chatId], references: [id], onDelete: Cascade)
+
+  role    Role // Quem enviou a mensagem: USER ou ASSISTANT
+  content String @db.Text // Usar @db.Text para conteúdos que podem ser longos
+
+  // ID da Mensagem na OpenAI. Útil para logs, depuração.
+  messageId String? @unique @map("message_id")
+  // ID da Run da OpenAI que gerou esta mensagem (se for do ASSISTANT)
+  runId     String? @map("run_id")
+
+  // Se a mensagem contiver referências a arquivos (File Search / Code Interpreter)
+  fileIds String[] @map("file_ids")// Array de IDs de arquivos da OpenAI. PostgreSQL suporta arrays nativamente.
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([chatId])
+  @@map("messages")
+}
+
+enum Role {
+  USER
+  ASSISTANT
 }

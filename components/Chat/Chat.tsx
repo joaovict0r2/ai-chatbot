@@ -35,6 +35,9 @@ export function Chat() {
     ]);
 
     // passar request para um server action. Dar uma limpada e separada no code.
+
+    // request de thread message e runs esta separado, rever essa funcao
+    // para chamar um request de cada vez.
     const response = await fetch(
       `/api/assistants/threads/${threadId}/messages`,
       {
@@ -71,7 +74,7 @@ export function Chat() {
       return [...messages.slice(0, -1), updatedLastMessage];
     });
   };
-  
+
   return (
     <div className="w-full max-w-[48rem]">
       <div>
