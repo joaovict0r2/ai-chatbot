@@ -12,9 +12,10 @@ jobs:
       - name: Install Dependencies
         run: npm install -g pnpm && pnpm install
 
-      - name: Copy .env.example files
-        shell: bash
-        run: find . -type f -name ".env.example" -exec sh -c 'cp "$1" "${1%.*}"' _ {} \;
+      - name: Build project
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: pnpm build
 
       - name: Typecheck
         run: pnpm typecheck
