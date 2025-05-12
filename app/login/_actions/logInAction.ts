@@ -5,7 +5,6 @@ import { loginSchema } from "@/schemas/loginSchema"
 import { AuthError, CredentialsSignin } from "next-auth"
 
 export async function logInAction(formData: FormData) {
-  "use server"
   const { success, data } = loginSchema.safeParse(Object.fromEntries(formData))
 
   if (!success) {

@@ -12,7 +12,7 @@ import { auth } from "@/lib/auth";
 
 export async function Dropdown() {
   const session = await auth()
-
+  console.log(session)
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
