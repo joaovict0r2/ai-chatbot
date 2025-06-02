@@ -1,6 +1,6 @@
 'use server'
 
-import { db } from "@/lib/db"
+import db from "@/lib/db"
 import { registerSchema } from "@/schemas/registerSchema"
 import { hash } from "bcryptjs"
 

@@ -2,7 +2,7 @@ import NextAuth from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 import Google from "next-auth/providers/google"
 
-import { db } from "./db"
+import db from "./db"
 import { compare } from "bcryptjs"
 import { loginSchema } from "@/schemas/loginSchema"
 import { PrismaAdapter } from '@auth/prisma-adapter'

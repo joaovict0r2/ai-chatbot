@@ -1,5 +1,5 @@
 import { AppSidebar } from "@/components/Sidebar/Sidebar"
-import { SidebarProvider } from "@/components/ui/sidebar"
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { ReactNode } from "react"
 
 interface ILayout {
@@ -9,12 +9,19 @@ interface ILayout {
 function Layout({ children }: ILayout) {
   return (
     <SidebarProvider>
-      <AppSidebar/>
+      <div className="w-full flex h-screen overflow-hidden">
+        <AppSidebar/>
 
-      <main className="w-full">
-        {/* <SidebarTrigger /> */}
-        {children}
-      </main>
+        <main className="flex-1 flex flex-col">
+          <div className="p-2">
+            <SidebarTrigger className="w-8 h-8 cursor-pointer"/>
+          </div>
+
+          <div className="flex-1 overflow-hidden">
+            {children}
+          </div>
+        </main>
+      </div>
     </SidebarProvider>
   )
 }
